@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udemy-python-app
+  labels:
+    app: udemy-python-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udemy-python-app
+  template:
+    metadata:
+      labels:
+        app: udemy-python-app
+    spec:
+      containers:
+        - name: udemy-python-app
+          image: papoucha/udemy-python-app:v2
+          ports:
+            - containerPort: 5000
