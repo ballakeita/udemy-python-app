@@ -21,4 +21,4 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: papoucha/udemy-python-app:${github.sha}
+          tags: papoucha/udemy-python-app:${{github.sha}}
