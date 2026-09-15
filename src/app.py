@@ -13,7 +13,7 @@ def details():
         'time' : datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
         
         'hostname' : socket.gethostname()
-        'message' : "You are doing gret, human ! "
+        'message' : "You are doing gret, human !"
     })
     
 @app.route('/api/v1/health')
