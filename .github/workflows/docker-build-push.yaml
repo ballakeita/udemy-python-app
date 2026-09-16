@@ -38,7 +38,7 @@ jobs:
           yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"'  charts/udemy-python-app/values.yaml
 
       - name: Commit et Push des changements
-        uses: Endbug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           message: "Update values.yaml with commit ${{needs.ci.outputs.commit_id}}"
 
