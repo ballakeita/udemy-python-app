@@ -9,7 +9,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Declare some variables
+      - name: Shorten ID commit
         shell: bash
         run: |
           echo "COMMIT_ID=${GITHUB_SHA::6}" >> "$GITHUB_ENV"
@@ -23,10 +23,25 @@ jobs:
         with:
           push: true
           tags: "papoucha/udemy-python-app:${{ env.COMMIT_ID }}"
+    outputs:
+      commit_id: ${{ env.COMMIT_ID  }}
   cd:
     needs: ci
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v4
+      - name: Modify values file
+        shell: bash
+        run: |
+          echo  ${{needs.ci.outputs.commit_id}}
+          pip install yq
+          yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"'  charts/udemy-python-app/values.yaml
+
+      - name: Commit et Push des changements
+        uses: Endbug/add-and-commit@v9
+        with:
+          message: "Update values.yaml with commit ${{needs.ci.outputs.commit_id}}"
+
       - name: install argocd
         shell: bash
         run: |
