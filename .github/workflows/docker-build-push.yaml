@@ -6,9 +6,6 @@ name: cicd
     branches:
       - main
 
-permissions:
-  packages: write
-
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -38,8 +35,8 @@ jobs:
         shell: bash
         run: |
           echo  ${{needs.ci.outputs.commit_id}}
-          sudo apt-get update && sudo apt-get install -y python3-pip
-          pip install yq
+          sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
+          sudo chmod +x /usr/local/bin/yq
           yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"'  charts/udemy-python-app/values.yaml
 
       - name: Commit et Push des changements
