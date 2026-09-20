@@ -5,6 +5,10 @@ name: cicd
       - src/**
     branches:
       - main
+
+permissions:
+  packages: write
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -34,6 +38,7 @@ jobs:
         shell: bash
         run: |
           echo  ${{needs.ci.outputs.commit_id}}
+          sudo apt-get update && sudo apt-get install -y python3-pip
           pip install yq
           yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"'  charts/udemy-python-app/values.yaml
 
