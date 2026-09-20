@@ -35,7 +35,7 @@ jobs:
         shell: bash
         run: |
           echo  ${{needs.ci.outputs.commit_id}}
-          sudo apt-get update && sudo apt-get install -y python3-pip
+          sudo apt-get update && sudo  apt install python3-xyz
           pip3 install yq
           yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"'  charts/udemy-python-app/values.yaml
 
